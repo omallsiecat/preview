@@ -1,5 +1,4 @@
 import os
-import sys
 from flask import Flask
 from flask_restful import Api
 from previews.routes import PreviewRequests

@@ -1,6 +1,5 @@
 from flask_restful import Resource, reqparse
 import re
-import os
 import validators
 from previews.model import Preview
 
