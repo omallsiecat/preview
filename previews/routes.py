@@ -12,7 +12,7 @@ class PreviewRequests(Resource):
     """
     def get(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("url", type=str, help="Specify a url")
+        parser.add_argument("url", required=True, type=str, help="need a url")
 
         args = parser.parse_args()
 
@@ -22,14 +22,24 @@ class PreviewRequests(Resource):
             url = "http://" + url
 
         if not validators.url(url):
-            return dict(message="Invalid url"), 400
+            return {
+                "message": {
+                    "url": "invalid"
+                }
+            }, 400
 
         preview = Preview(url)
 
+        # TODO: Time box
+
         try:
             preview.fetch()
-        except Exception as e:
-            return dict(message="Failed to fetch"), 400
+        except Exception:
+            return {
+                "message": {
+                    "url": "Failed to fetch '{}'".format(url)
+                }
+            }, 400
 
         preview.cache()
 
