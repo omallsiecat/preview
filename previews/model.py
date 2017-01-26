@@ -43,7 +43,7 @@ class Preview(object):
             attr: re.compile(r"title", re.I)
         }) for attr in ["name", "property"]]
 
-        for i in [0, 1]:
+        for i in range(1):
             if len(title_elems[i]) > 0:
                 self.title = title_elems[i][0]["content"]
                 break
@@ -51,7 +51,7 @@ class Preview(object):
                 # Get the <title> as a string
                 self.title = str(soup.title.string)
 
-        self.title = self.title.split(r"/[-–—]+/")[0]
+        self.title = self.title.split(r"/[-–—-]+/")[0]
 
         # Get the desc from whatever we can find
         desc_elems = soup.findAll(attrs={"name": re.compile(r"Desc", re.I)})
