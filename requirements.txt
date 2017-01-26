@@ -6,6 +6,7 @@ decorator==4.0.11
 enum-compat==0.0.2
 eventlet==0.20.1
 Flask==0.12
+Flask-Cors==3.0.2
 Flask-RESTful==0.3.5
 greenlet==0.4.11
 gunicorn==19.6.0
