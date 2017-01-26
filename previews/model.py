@@ -51,7 +51,9 @@ class Preview(object):
                 # Get the <title> as a string
                 self.title = str(soup.title.string)
 
-        self.title = self.title.split(r"/[-–—-]+/")[0]
+        titles = re.compile("[-–:]+").split(self.title)
+
+        self.title = titles[0].strip()
 
         # Get the desc from whatever we can find
         desc_elems = soup.findAll(attrs={"name": re.compile(r"Desc", re.I)})
