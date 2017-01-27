@@ -51,7 +51,7 @@ class Preview(object):
                 # Get the <title> as a string
                 self.title = str(soup.title.string)
 
-        titles = re.compile("[-–|:]+").split(self.title)
+        titles = re.compile("[-–|:•]+").split(self.title)
 
         self.title = titles[0].strip()
 

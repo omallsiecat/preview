@@ -31,7 +31,7 @@ class PreviewUnitTests(unittest.TestCase):
                 "url": "https://letterboxd.com/",
                 "desc": "Letterboxd is a social network for sharing your taste in film. Use it as a diary to record your opinion about films as you watch them, or just to...",
                 "icon": "https://s1.ltrbxd.com/static/img/icons/196.d0437325.png",
-                "title": "Letterboxd • Your life in film"
+                "title": "Letterboxd"
             },
             {
                 "url": "https://www.nytimes.com/",
