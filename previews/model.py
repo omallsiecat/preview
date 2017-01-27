@@ -2,7 +2,7 @@ import os
 import redis
 import json
 from bs4 import BeautifulSoup
-import urllib
+import urllib.request
 import re
 
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
