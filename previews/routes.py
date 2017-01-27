@@ -2,6 +2,12 @@ from flask_restful import Resource, reqparse
 import re
 import validators
 from previews.model import Preview
+import os
+import redis
+import json
+
+redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+redis = redis.from_url(redis_url)
 
 
 def adds_http(url):
@@ -31,6 +37,13 @@ class PreviewRequests(Resource):
                     "url": "invalid"
                 }
             }, 400
+
+        # Check the cache to see if we already have this sucker
+        cached_preview = redis.get(url)
+
+        if cached_preview is not None:
+            cached = json.loads(cached_preview.decode("utf-8"))
+            return cached, 200
 
         preview = Preview(url)
 
