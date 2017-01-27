@@ -1,4 +1,7 @@
 machine:
+	services:
+		- redis
+
     python:
         version: 3.5.2
 
