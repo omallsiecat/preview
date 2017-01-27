@@ -58,7 +58,7 @@ class Preview(object):
         # Get the desc from whatever we can find
         desc_elems = [soup.findAll(attrs={attr: re.compile(r"Desc", re.I)}) for attr in ["name", "property"]]
 
-        for i in [0, 1]:
+        for i in range(1):
             if len(desc_elems[i]) > 0:
                 self.desc = desc_elems[i][0]["content"]
                 break
