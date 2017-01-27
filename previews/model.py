@@ -93,5 +93,9 @@ class Preview(object):
         redis.setex(self.url, serialized.encode("utf-8"), expiry)
 
 
+class TimeoutException(Exception):
+    pass
+
+
 def handler(signum, frame):
-    raise IOError
+    raise TimeoutException
