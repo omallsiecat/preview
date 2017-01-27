@@ -1,6 +1,7 @@
 # -*-coding:UTF-8-*-
 import unittest
-from previews.model import Preview, adds_http
+from previews.model import Preview
+from previews.routes import adds_http
 from urllib.error import URLError
 import redis
 import os
