@@ -34,8 +34,6 @@ class PreviewRequests(Resource):
 
         preview = Preview(url)
 
-        # TODO: Time box
-
         try:
             preview.fetch()
         except Exception:
