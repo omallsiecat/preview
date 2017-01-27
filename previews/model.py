@@ -22,16 +22,6 @@ class Preview(object):
         for the website passed in
         """
 
-        # Check cache for this object first
-        cached_preview = redis.get(self.url)
-
-        if cached_preview is not None:
-            cached = json.loads(cached_preview.decode("utf-8"))
-            self.title = cached["title"]
-            self.desc = cached["desc"]
-            self.icon = cached["icon"]
-            return
-
         html = urllib.request.urlopen(self.url, timeout=timeout)
 
         soup = BeautifulSoup(
