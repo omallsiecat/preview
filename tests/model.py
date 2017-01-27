@@ -4,6 +4,7 @@ from previews.model import Preview, adds_http
 from urllib.error import URLError
 import redis
 import os
+import json
 
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
 redis = redis.from_url(redis_url)
@@ -94,9 +95,14 @@ class PreviewUnitTests(unittest.TestCase):
         preview.fetch()
         preview.cache(expiry=5)
 
-        cached_preview = Preview(url["url"])
-        cached_preview.fetch()
+        cached_preview = redis.get(url["url"])
 
-        self.assertEqual(preview.title, cached_preview.title)
-        self.assertEqual(preview.desc, cached_preview.desc)
-        self.assertEqual(preview.icon, cached_preview.icon)
+        cached = json.loads(cached_preview.decode("utf-8"))
+
+        title = cached["title"]
+        desc = cached["desc"]
+        icon = cached["icon"]
+
+        self.assertEqual(preview.title, title)
+        self.assertEqual(preview.desc, desc)
+        self.assertEqual(preview.icon, icon)
