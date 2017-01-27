@@ -67,9 +67,9 @@ class Preview(object):
 
         if len(self.desc.split()) > 30:
             self.desc = " ".join(self.desc.split()[0:29]).strip()
-
-        if self.desc != "" and re.search(r"(\.\.\.|…)", self.desc) is None:
-            self.desc = self.desc + "..."
+            
+            if re.search(r"(\.\.\.|…)", self.desc) is None:
+                self.desc = self.desc + "..."
 
         icon_link = soup.find("link", rel=re.compile(r"shortcut icon"))
 
