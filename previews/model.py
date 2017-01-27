@@ -2,7 +2,7 @@ import os
 import redis
 import json
 from bs4 import BeautifulSoup
-import urllib
+import urllib.request
 import re
 
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
@@ -16,7 +16,7 @@ class Preview(object):
         self.desc = desc
         self.icon = icon
 
-    def fetch(self):
+    def fetch(self, timeout=1):
         """
         Fetches the url, parses the title, desc and icon
         for the website passed in
@@ -32,7 +32,7 @@ class Preview(object):
             self.icon = cached["icon"]
             return
 
-        html = urllib.request.urlopen(self.url)
+        html = urllib.request.urlopen(self.url, timeout=timeout)
 
         soup = BeautifulSoup(
             html.read().decode("utf-8", "ignore"),
