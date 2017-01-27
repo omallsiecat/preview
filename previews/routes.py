@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
 import re
 import validators
-from previews.model import Preview
+from previews.model import Preview, adds_http
 
 
 class PreviewRequests(Resource):
@@ -16,9 +16,7 @@ class PreviewRequests(Resource):
         args = parser.parse_args()
 
         url = args.get("url")
-
-        if re.search(r"https?:\/\/", url) is None:
-            url = "http://" + url
+        url = adds_http(url)
 
         if not validators.url(url):
             return {

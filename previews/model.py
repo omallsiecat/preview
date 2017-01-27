@@ -2,7 +2,7 @@ import os
 import redis
 import json
 from bs4 import BeautifulSoup
-import urllib
+import urllib.request
 import re
 
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
@@ -91,3 +91,10 @@ class Preview(object):
         """
         serialized = json.dumps(self.to_dict())
         redis.setex(self.url, serialized.encode("utf-8"), expiry)
+
+
+def adds_http(url):
+    if re.search(r"https?:\/\/", url) is None:
+        url = "http://" + url
+
+    return url
