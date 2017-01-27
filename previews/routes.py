@@ -4,6 +4,13 @@ import validators
 from previews.model import Preview
 
 
+def adds_http(url):
+    if re.search(r"https?:\/\/", url) is None:
+        url = "http://" + url
+
+    return url
+
+
 class PreviewRequests(Resource):
     """
     Handles all requests for link previews. Requires a url argument 'url'
@@ -16,9 +23,7 @@ class PreviewRequests(Resource):
         args = parser.parse_args()
 
         url = args.get("url")
-
-        if re.search(r"https?:\/\/", url) is None:
-            url = "http://" + url
+        url = adds_http(url)
 
         if not validators.url(url):
             return {
