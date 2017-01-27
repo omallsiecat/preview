@@ -1,7 +1,8 @@
 from flask_restful import Resource, reqparse
 import re
 import validators
-from previews.model import Preview
+from previews.model import Preview, handler
+import signal
 
 
 class PreviewRequests(Resource):
@@ -29,7 +30,8 @@ class PreviewRequests(Resource):
 
         preview = Preview(url)
 
-        # TODO: Time box
+        signal.signal(signal.SIGALRM, handler)
+        signal.alarm(1)
 
         try:
             preview.fetch()
@@ -39,6 +41,14 @@ class PreviewRequests(Resource):
                     "url": "Failed to fetch '{}'".format(url)
                 }
             }, 400
+        except IOError:
+            return {
+                "message": {
+                    "timeout": "request took longer than 1 sec"
+                }
+            }, 400
+
+        signal.alarm(0)
 
         preview.cache()
 

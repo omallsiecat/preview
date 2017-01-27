@@ -91,3 +91,7 @@ class Preview(object):
         """
         serialized = json.dumps(self.to_dict())
         redis.setex(self.url, serialized.encode("utf-8"), expiry)
+
+
+def handler(signum, frame):
+    raise IOError
