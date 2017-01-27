@@ -2,15 +2,6 @@ from flask_restful import Resource, reqparse
 import re
 import validators
 from previews.model import Preview
-import signal
-
-
-class TimeoutException(Exception):
-    pass
-
-
-def handler(signum, frame):
-    raise TimeoutException
 
 
 def adds_http(url):
@@ -43,25 +34,14 @@ class PreviewRequests(Resource):
 
         preview = Preview(url)
 
-        signal.signal(signal.SIGALRM, handler)
-        signal.alarm(1)
-
         try:
             preview.fetch()
-        except TimeoutException:
-            return {
-                "message": {
-                    "timeout": "request took longer than 1 sec"
-                }
-            }, 400
         except Exception:
             return {
                 "message": {
                     "url": "Failed to fetch '{}'".format(url)
                 }
             }, 400
-        finally:
-            signal.alarm(0)
 
         preview.cache()
 
