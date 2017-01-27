@@ -1,8 +1,16 @@
 from flask_restful import Resource, reqparse
 import re
 import validators
-from previews.model import Preview, handler, TimeoutException
+from previews.model import Preview
 import signal
+
+
+class TimeoutException(Exception):
+    pass
+
+
+def handler(signum, frame):
+    raise TimeoutException
 
 
 class PreviewRequests(Resource):

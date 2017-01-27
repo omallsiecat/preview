@@ -91,11 +91,3 @@ class Preview(object):
         """
         serialized = json.dumps(self.to_dict())
         redis.setex(self.url, serialized.encode("utf-8"), expiry)
-
-
-class TimeoutException(Exception):
-    pass
-
-
-def handler(signum, frame):
-    raise TimeoutException
