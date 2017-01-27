@@ -1,0 +1,11 @@
+machine:
+    python:
+        version: 3.5.2
+
+dependencies:
+    pre:
+        - "make init"
+
+test:
+    override:
+        - "make test"
