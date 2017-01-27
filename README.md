@@ -1,5 +1,5 @@
 # Previewer
-Our link previewer! It returns JSON describing a given `url`. To use it, navigate to https://link-previewer.herokuapp.com/
+Our link previewer! It returns JSON describing a given `url`. To use it, navigate to https://previews.ada.support/
 
 We built this for ourselves, but you can use it too if you like.
 
@@ -7,7 +7,7 @@ We built this for ourselves, but you can use it too if you like.
 The only argument we need is a `url` pass it in as a url argument like this:
 
 ```sh
-https://link-previewer.herokuapp.com/?url=slack.com
+https://previews.ada.support/?url=slack.com
 ```
 
 ## Response

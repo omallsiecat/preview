@@ -34,10 +34,26 @@ class Preview(object):
 
         html = urllib.request.urlopen(self.url)
 
-        soup = BeautifulSoup(html.read().decode("utf-8", "ignore"), "html.parser")
+        soup = BeautifulSoup(
+            html.read().decode("utf-8", "ignore"),
+            "html.parser"
+        )
 
-        # Get the <title> as a string
-        self.title = str(soup.title.string)
+        title_elems = [soup.findAll(attrs={
+            attr: re.compile(r"title", re.I)
+        }) for attr in ["name", "property"]]
+
+        for i in range(1):
+            if len(title_elems[i]) > 0:
+                self.title = title_elems[i][0]["content"]
+                break
+            else:
+                # Get the <title> as a string
+                self.title = str(soup.title.string)
+
+        titles = re.compile("[-–|:]+").split(self.title)
+
+        self.title = titles[0].strip()
 
         # Get the desc from whatever we can find
         desc_elems = soup.findAll(attrs={"name": re.compile(r"Desc", re.I)})
