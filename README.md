@@ -11,7 +11,7 @@ https://previews.ada.support/?url=slack.com
 ```
 
 ## Response
-We return JSON with utf-8 characters encoded using `\u`. If everything went OK you should see a response like this:
+We return JSON with utf-8 characters encoded using `\u`. Here's what a good response might look like:
 
 ```js
 {
@@ -22,4 +22,4 @@ We return JSON with utf-8 characters encoded using `\u`. If everything went OK y
 ```
 
 ## Errors
-Errors will return a 400 status code and a `message` paramter describing the issue.
+Errors will return a 400 status code and a `message` parameter describing the issue.
