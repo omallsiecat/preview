@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from flask.ext.cors import CORS
+from flask_cors import CORS
 from flask_restful import Api
 from previews.routes import PreviewRequests
 

@@ -6,6 +6,10 @@ import os
 import redis
 import json
 
+from raven import Client as SentryClient
+sentry = SentryClient(os.getenv("SENTRY_DSN"))
+
+
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
 redis = redis.from_url(redis_url)
 
@@ -50,6 +54,7 @@ class PreviewRequests(Resource):
         try:
             preview.fetch()
         except Exception:
+            sentry.captureException()
             return {
                 "message": {
                     "url": "Failed to fetch '{}'".format(url)

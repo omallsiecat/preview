@@ -2,7 +2,6 @@
 import unittest
 from previews.model import Preview
 from previews.routes import adds_http
-from urllib.error import URLError
 import redis
 import os
 import json
@@ -16,21 +15,21 @@ class PreviewUnitTests(unittest.TestCase):
         # TODO: shorten test descriptions once branch issue3 is merged
         self.good_urls = [
             {
-                "url": "https://usecanvas.com/",
-                "desc": "",
-                "icon": "https://usecanvas.com/images/favicon.ico",
-                "title": "Canvas"
+                "url": "https://slack.com",
+                "desc": "Slack is where work flows. It's where the people you need, the information you share, and the tools you use come together to get things done.",
+                "icon": "https://a.slack-edge.com/436da/marketing/img/meta/favicon-32.png",
+                "title": "Where work happens"
             },
             {
                 "url": "http://productioncommunity.publicmobile.ca/t5/Announcements/Update-on-support/m-p/114863",
                 "desc": "Hello Community, I want to give you an update on where we are at right now, since the last time I did so was last week. First, I want...",
-                "icon": "http://rsxze77497.i.lithium.com/html/assets/PublicMobile_Favicon.ico?A019DE33B730A1F6B2A0A91F5E58D31F",
+                "icon": "https://rsxze77497.i.lithium.com/html/assets/PublicMobile_Favicon.ico?A019DE33B730A1F6B2A0A91F5E58D31F",
                 "title": "Update on support"
             },
             {
                 "url": "https://letterboxd.com/",
                 "desc": "Letterboxd is a social network for sharing your taste in film. Use it as a diary to record your opinion about films as you watch them, or just to...",
-                "icon": "https://s1.ltrbxd.com/static/img/icons/196.d0437325.png",
+                "icon": "https://s2.ltrbxd.com/static/img/icons/196.a7eef26f.png",
                 "title": "Letterboxd"
             },
             {
@@ -49,11 +48,11 @@ class PreviewUnitTests(unittest.TestCase):
         self.not_a_site = "https://fsdfsdfkmdslfndsjfndsjfgnsdkjnf.com"
 
         self.preview_dict = {
-            "url": "https://usecanvas.com/",
+            "url": "https://slack.com/",
             "returns": {
-                "title": "Canvas",
-                "desc": "",
-                "icon": "https://usecanvas.com/images/favicon.ico"
+                "title": "Where work happens",
+                "desc": "Slack is where work flows. It's where the people you need, the information you share, and the tools you use come together to get things done.",
+                "icon": "https://a.slack-edge.com/436da/marketing/img/meta/favicon-32.png"
             }
         }
 
@@ -74,10 +73,10 @@ class PreviewUnitTests(unittest.TestCase):
         self.assertEqual(adds_http(self.missing_http["before"]), self.missing_http["after"])
 
     def tests_non_site(self):
-        """Tests that a url for a non-site raises a URLError"""
+        """Tests that a url for a non-site raises an Exception"""
         preview = Preview(self.not_a_site)
 
-        with self.assertRaises(URLError):
+        with self.assertRaises(Exception):
             preview.fetch()
 
     def tests_to_dict(self):
