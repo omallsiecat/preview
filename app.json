@@ -5,6 +5,9 @@
   "env": {
     "REDIS_URL": {
       "required": true
+    },
+    "IMGIX_KEY": {
+      "required": true
     }
   },
   "formation": {

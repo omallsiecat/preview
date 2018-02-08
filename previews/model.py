@@ -1,20 +1,30 @@
 import os
 import redis
+import imgix
 import json
 from bs4 import BeautifulSoup
 import urllib.request
+import urllib.parse
 import re
 
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
 redis = redis.from_url(redis_url)
 
+if os.getenv("IMGIX_KEY") is not None:
+    builder = imgix.UrlBuilder("ada-previewer.imgix.net", use_https=True, sign_key=os.getenv("IMGIX_KEY"))
+else:
+    raise ValueError("Please set IMGIX_KEY in your environment variables")
+
+
+IMAGE_LINK_MAX_WIDTH = 768
 
 class Preview(object):
-    def __init__(self, url, title="", desc="", icon=""):
+    def __init__(self, url, title="", desc="", icon="", image=""):
         self.url = url
         self.title = title
         self.desc = desc
         self.icon = icon
+        self.image = image
 
     def fetch(self, timeout=1):
         """
@@ -76,6 +86,24 @@ class Preview(object):
             else:
                 self.icon = self.url + icon_href
 
+        # Fetch Open Graph Image
+        image = soup.find("meta", property="og:image")
+
+        if image is None:
+            # Use favicon if no image is specified
+            self.image = self.icon
+
+        if image is not None:
+            # Check if image link is global or relative
+            image_link = image["content"]
+
+            if image_link.find("http") != -1:
+                self.image = image_link
+            else:
+                self.image = self.url + image_link
+
+            self.image = builder.create_url(self.image, {'max-w': IMAGE_LINK_MAX_WIDTH})
+
     def to_dict(self):
         """
         Returns as a dictionary for clients
@@ -83,7 +111,8 @@ class Preview(object):
         return dict(
             title=self.title,
             desc=self.desc,
-            icon=self.icon
+            icon=self.icon,
+            image=self.image
         )
 
     def cache(self, expiry=1800):
