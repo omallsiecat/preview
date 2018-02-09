@@ -15,8 +15,11 @@ if os.getenv("IMGIX_KEY") is not None:
 else:
     raise ValueError("Please set IMGIX_KEY in your environment variables")
 
-
-IMAGE_LINK_MAX_WIDTH = 768
+RESIZE_OPTIONS = {
+    'max-w': 768,
+    'max-h': 768,
+    'fit': 'crop'
+}
 
 class Preview(object):
     def __init__(self, url, title="", desc="", icon="", image=""):
@@ -102,7 +105,7 @@ class Preview(object):
             else:
                 self.image = self.url + image_link
 
-            self.image = builder.create_url(self.image, {'max-w': IMAGE_LINK_MAX_WIDTH})
+            self.image = builder.create_url(self.image, RESIZE_OPTIONS)
 
     def to_dict(self):
         """
