@@ -1,0 +1,28 @@
+---
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.5
+      - image: redis
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: |
+            python3 -m venv env
+            source ./env/bin/activate
+            make init
+            make test
+
+workflows:
+  version: 2
+  preview-workflow:
+    jobs:
+      - test
+
+experimental:
+  notify:
+    branches:
+      only:
+        - master

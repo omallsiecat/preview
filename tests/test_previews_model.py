@@ -46,7 +46,7 @@ class PreviewUnitTests(unittest.TestCase):
             {
                 "url": "https://www.nytimes.com/",
                 "desc": "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
-                "icon": "https://static01.nyt.com/favicon.ico",
+                "icon": "https://static.nytimes.com/favicon.ico",
                 "image": builder.create_url("https://static01.nyt.com/images/icons/t_logo_291_black.png", {'max-w': IMAGE_LINK_MAX_WIDTH}),
                 "title": "The New York Times"
             }
