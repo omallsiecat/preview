@@ -39,7 +39,7 @@ class PreviewUnitTests(unittest.TestCase):
             {
                 "url": "https://letterboxd.com/",
                 "desc": "Letterboxd is a social network for sharing your taste in film. Use it as a diary to record your opinion about films as you watch them, or just to...",
-                "icon": "https://s3.ltrbxd.com/static/img/icons/196.a7eef26f.png",
+                "icon": "https://s1.ltrbxd.com/static/img/icons/196.a7eef26f.png",
                 "image": builder.create_url("https://s3.ltrbxd.com/static/img/avatar.c8a4053e.png", {'max-w': IMAGE_LINK_MAX_WIDTH}),
                 "title": "Letterboxd"
             },

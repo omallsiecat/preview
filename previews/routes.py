@@ -5,9 +5,11 @@ from previews.model import Preview
 import os
 import redis
 import json
-
-from raven import Client as SentryClient
-sentry = SentryClient(os.getenv("SENTRY_DSN"))
+from raven import Client
+sentry = Client(
+    dsn=os.getenv("SENTRY_DSN"),
+    environment=os.getenv("SENTRY_ENVIRONMENT"),
+)
 
 
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
