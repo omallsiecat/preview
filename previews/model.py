@@ -3,9 +3,14 @@ import redis
 import imgix
 import json
 from bs4 import BeautifulSoup
-import urllib.request
-import urllib.parse
+from urllib.request import (
+    Request,
+    urlopen,
+)
 import re
+
+USER_AGENT = "Ada Preview Bot"
+IMAGE_LINK_MAX_WIDTH = 768
 
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
 redis = redis.from_url(redis_url)
@@ -14,9 +19,6 @@ if os.getenv("IMGIX_KEY") is not None:
     builder = imgix.UrlBuilder("ada-previewer.imgix.net", use_https=True, sign_key=os.getenv("IMGIX_KEY"))
 else:
     raise ValueError("Please set IMGIX_KEY in your environment variables")
-
-
-IMAGE_LINK_MAX_WIDTH = 768
 
 class Preview(object):
     def __init__(self, url, title="", desc="", icon="", image=""):
@@ -32,7 +34,9 @@ class Preview(object):
         for the website passed in
         """
 
-        html = urllib.request.urlopen(self.url, timeout=timeout)
+        q = Request(self.url)
+        q.add_header('User-Agent', USER_AGENT)
+        html = urlopen(q, timeout=timeout)
 
         soup = BeautifulSoup(
             html.read().decode("utf-8", "ignore"),
