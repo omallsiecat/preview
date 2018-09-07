@@ -22,6 +22,14 @@ def adds_http(url):
 
     return url
 
+class HealthzEndpoint(Resource):
+    """
+    Returns information on the health of the service.
+    """
+    def get(self):
+        return {
+            "status": "ok"
+        }, 200
 
 class PreviewRequests(Resource):
     """
