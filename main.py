@@ -6,13 +6,16 @@ from previews.routes import (
   PreviewRequests,
   HealthzEndpoint,
 )
+from flask_prom import monitor
 
-app = Flask(__name__)
+app = Flask("preview")
 CORS(app)
 api = Api(app)
+
+app.wsgi_app = monitor(app)
 
 api.add_resource(PreviewRequests, "/")
 api.add_resource(HealthzEndpoint, "/healthz")
 
 if __name__ == "__main__":
-    app.run(debug=os.environ.get("FLASK_DEBUG", False))
+  app.run(debug=os.environ.get("FLASK_DEBUG", False))

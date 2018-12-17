@@ -25,7 +25,7 @@ class PreviewUnitTests(unittest.TestCase):
             {
                 "url": "https://slack.com",
                 "desc": "Slack is where work flows. It's where the people you need, the information you share, and the tools you use come together to get things done.",
-                "icon": "https://a.slack-edge.com/436da/marketing/img/meta/favicon-32.png",
+                "icon": "https://a.slack-edge.com/515d0/img/icons/favicon-32.png",
                 "image": builder.create_url("https://a.slack-edge.com/436da/marketing/img/meta/slack_hash_128.png", {'max-w': IMAGE_LINK_MAX_WIDTH}),
                 "title": "Where work happens"
             },
@@ -39,16 +39,16 @@ class PreviewUnitTests(unittest.TestCase):
             {
                 "url": "https://letterboxd.com/",
                 "desc": "Letterboxd is a social network for sharing your taste in film. Use it as a diary to record your opinion about films as you watch them, or just to...",
-                "icon": "https://s1.ltrbxd.com/static/img/icons/196.a7eef26f.png",
+                "icon": "https://s1.ltrbxd.com/static/img/icons/touch-icon-192x192.9d519d1e.png",
                 "image": builder.create_url("https://s3.ltrbxd.com/static/img/avatar.c8a4053e.png", {'max-w': IMAGE_LINK_MAX_WIDTH}),
                 "title": "Letterboxd"
             },
             {
                 "url": "https://www.nytimes.com/",
                 "desc": "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
-                "icon": "https://static.nytimes.com/favicon.ico",
+                "icon": "https://www.nytimes.com//vi-assets/static-assets/favicon-4bf96cb6a1093748bf5b3c429accb9b4.ico",
                 "image": builder.create_url("https://static01.nyt.com/images/icons/t_logo_291_black.png", {'max-w': IMAGE_LINK_MAX_WIDTH}),
-                "title": "The New York Times"
+                "title": "Breaking News, World News & Multimedia"
             }
         ]
 
@@ -63,7 +63,7 @@ class PreviewUnitTests(unittest.TestCase):
             "url": "https://slack.com/",
             "returns": {
                 "desc": "Slack is where work flows. It's where the people you need, the information you share, and the tools you use come together to get things done.",
-                "icon": "https://a.slack-edge.com/436da/marketing/img/meta/favicon-32.png",
+                "icon": "https://a.slack-edge.com/515d0/img/icons/favicon-32.png",
                 "image": builder.create_url("https://a.slack-edge.com/436da/marketing/img/meta/slack_hash_128.png", {'max-w': IMAGE_LINK_MAX_WIDTH}),
                 "title": "Where work happens"
             }
