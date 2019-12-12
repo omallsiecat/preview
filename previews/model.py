@@ -2,6 +2,7 @@ import os
 import redis
 import imgix
 import json
+import gzip
 from bs4 import BeautifulSoup
 from urllib.request import (
     Request,
@@ -16,9 +17,14 @@ redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
 redis = redis.from_url(redis_url)
 
 if os.getenv("IMGIX_KEY") is not None:
-    builder = imgix.UrlBuilder("ada-previewer.imgix.net", use_https=True, sign_key=os.getenv("IMGIX_KEY"))
+    builder = imgix.UrlBuilder(
+        "ada-previewer.imgix.net",
+        use_https=True,
+        sign_key=os.getenv("IMGIX_KEY")
+    )
 else:
     raise ValueError("Please set IMGIX_KEY in your environment variables")
+
 
 class Preview(object):
     def __init__(self, url, title="", desc="", icon="", image=""):
@@ -38,8 +44,15 @@ class Preview(object):
         q.add_header('User-Agent', USER_AGENT)
         html = urlopen(q, timeout=timeout)
 
+        encoding = html.getheader("Content-Encoding")
+
+        content = html.read()
+
+        if encoding == "gzip":
+            content = gzip.decompress(content)
+
         soup = BeautifulSoup(
-            html.read().decode("utf-8", "ignore"),
+            content.decode("utf-8", "ignore"),
             "html.parser"
         )
 
@@ -60,7 +73,9 @@ class Preview(object):
         self.title = titles[0].strip()
 
         # Get the desc from whatever we can find
-        desc_elems = [soup.findAll(attrs={attr: re.compile(r"Desc", re.I)}) for attr in ["name", "property"]]
+        desc_elems = [soup.findAll(
+            attrs={attr: re.compile(r"Desc", re.I)}
+        ) for attr in ["name", "property"]]
 
         for i in range(1):
             if len(desc_elems[i]) > 0:
@@ -106,7 +121,10 @@ class Preview(object):
             else:
                 self.image = self.url + image_link
 
-            self.image = builder.create_url(self.image, {'max-w': IMAGE_LINK_MAX_WIDTH})
+            self.image = builder.create_url(
+                self.image,
+                {'max-w': IMAGE_LINK_MAX_WIDTH}
+            )
 
     def to_dict(self):
         """
