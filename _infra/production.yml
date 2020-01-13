@@ -1,0 +1,7 @@
+---
+context: cluster.ada.support
+include:
+  - name: manifests
+    values:
+      env: production
+      replicas: 3

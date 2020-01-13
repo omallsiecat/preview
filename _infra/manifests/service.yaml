@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: preview
+  labels:
+    app: preview
+    tier: backend
+    env: {{ .env }}
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8000
+  selector:
+    app: preview
+    tier: backend
+    env: {{ .env }}

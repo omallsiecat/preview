@@ -1,0 +1,63 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: preview
+spec:
+  replicas: {{ .replicas }}
+  template:
+    metadata:
+      labels:
+        app: preview
+        tier: backend
+        type: web
+        env: {{ .env }}
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: preview
+        image: 906997123624.dkr.ecr.us-east-1.amazonaws.com/preview:{{ gitHEAD }}
+        livenessProbe:
+          initialDelaySeconds: 15
+          httpGet:
+            path: /healthz
+            port: 8000
+            scheme: HTTP
+        readinessProbe:
+          initialDelaySeconds: 15
+          httpGet:
+            path: /healthz
+            port: 8000
+            scheme: HTTP
+        resources:
+          requests:
+            memory: 80Mi
+            cpu: 20m
+          limits:
+            memory: 600Mi
+            cpu: 100m
+        env:
+          - name: ENV
+            value: "{{ .env }}"
+          - name: DD_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: DD_ENTITY_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.uid
+          - name: DATADOG_ENV
+            value: "{{ .env }}"
+          - name: DATADOG_SERVICE_NAME
+            value: preview
+        ports:
+        - containerPort: 8000
+        args: [
+          "ddtrace-run",
+          "gunicorn", "main:app",
+          "-b", "0.0.0.0:8000",
+          "--log-level", "info",
+          "--capture-output",
+          "--error-logfile", "-"
+        ]
