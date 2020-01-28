@@ -31,10 +31,10 @@ spec:
             scheme: HTTP
         resources:
           requests:
-            memory: 300Mi
+            memory: 800Mi
             cpu: 35m
           limits:
-            memory: 600Mi
+            memory: 800Mi
             cpu: 100m
         env:
           - name: ENV
