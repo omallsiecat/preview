@@ -57,7 +57,7 @@ class PreviewUnitTests(unittest.TestCase):
         self.gzip_urls = [
             {
                 "url": "https://ycombinator.com/",
-                "icon": "https://ycombinator.com//favicon.ico",
+                "icon": "https://ycombinator.com///d1l6icgp8w0hse.cloudfront.net/assets/ycdc/favicon-402519a37fed7880aea64ce37c210cd32c33be9b468fb2668ffcd6faec51260d.ico",
                 "desc": "Y Combinator created a new model for funding early stage startups. Twice a year we invest in a large number of startups.",
                 "image": builder.create_url("https://ycombinator.com//favicon.ico", {'max-w': IMAGE_LINK_MAX_WIDTH}),
                 "title": "Y Combinator"
