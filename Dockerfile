@@ -18,7 +18,4 @@ COPY entrypoint.sh /usr/local/bin/entrypoint
 
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
 
-WORKDIR /usr/src/app
-COPY . /usr/src/app
-
 CMD ["gunicorn", "main:app", "-b", "0.0.0.0:8000", "--worker-class", "gevent", "--access-logfile", "-", "--log-level", "info", "--log-syslog"]
