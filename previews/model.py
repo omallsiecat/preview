@@ -34,6 +34,18 @@ class Preview(object):
         self.icon = icon
         self.image = image
 
+    def __get_description(self, htmlSoup):
+        desc_elems = htmlSoup.findAll("meta", attrs={"name": re.compile(r"Desc", re.I)})
+
+        if len(desc_elems) == 0:
+            return ""
+
+        for meta_elem in desc_elems:
+            if meta_elem.attrs["content"]:
+                return meta_elem.attrs["content"]
+            else:
+                return ""
+
     def fetch(self, timeout=1):
         """
         Fetches the url, parses the title, desc and icon
@@ -73,13 +85,7 @@ class Preview(object):
         self.title = titles[0].strip()
 
         # Get the desc from whatever we can find
-        desc_elems = soup.findAll("meta", attrs={"name": re.compile(r"Desc", re.I)})
-
-        for meta_elem in desc_elems:
-            if meta_elem.attrs["content"]:
-                self.desc = meta_elem.attrs["content"]
-            else:
-                self.desc = ""
+        self.desc = self.__get_description(soup)
 
         if len(self.desc.split()) > 30:
             self.desc = " ".join(self.desc.split()[0:29]).strip()
