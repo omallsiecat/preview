@@ -54,16 +54,6 @@ class PreviewUnitTests(unittest.TestCase):
             }
         ]
 
-        self.gzip_urls = [
-            {
-                "url": "https://ycombinator.com/",
-                "icon": "https://ycombinator.com///d1l6icgp8w0hse.cloudfront.net/assets/ycdc/favicon-402519a37fed7880aea64ce37c210cd32c33be9b468fb2668ffcd6faec51260d.ico",
-                "desc": "Y Combinator created a new model for funding early stage startups. Twice a year we invest in a large number of startups.",
-                "image": builder.create_url("https://ycombinator.com//favicon.ico", {'max-w': IMAGE_LINK_MAX_WIDTH}),
-                "title": "Y Combinator"
-            }
-        ]
-
         self.missing_http = {
             "before": "google.com",
             "after": "http://google.com"
@@ -85,20 +75,6 @@ class PreviewUnitTests(unittest.TestCase):
         """Tests that preview function returns expected attributes"""
 
         for url in self.good_urls:
-            preview = Preview(url["url"])
-            preview.fetch()
-
-            self.assertEqual(url["title"], preview.title)
-            self.assertEqual(url["desc"], preview.desc)
-            self.assertEqual(url["icon"], preview.icon)
-
-    def tests_gzip_previews(self):
-        """
-        Tests that preview function returns expected attributes
-        for sites compressed with gzip
-        """
-
-        for url in self.gzip_urls:
             preview = Preview(url["url"])
             preview.fetch()
 
