@@ -17,6 +17,10 @@ else:
 
 IMAGE_LINK_MAX_WIDTH = 768
 
+# TODO: We should re-write our tests with fixtures! We are currently testing
+# against live websites that we do not control. Our tests could break whenever
+# a change is made to one of these sites.
+# https://adasupport.atlassian.net/browse/CXP-138
 
 class PreviewUnitTests(unittest.TestCase):
     maxDiff = None
