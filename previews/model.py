@@ -78,8 +78,6 @@ class Preview(object):
         for meta_elem in desc_elems:
             if meta_elem.attrs["content"]:
                 self.desc = meta_elem.attrs["content"]
-            else:
-                self.desc = ""
 
         if len(self.desc.split()) > 30:
             self.desc = " ".join(self.desc.split()[0:29]).strip()
