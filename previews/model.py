@@ -73,14 +73,13 @@ class Preview(object):
         self.title = titles[0].strip()
 
         # Get the desc from whatever we can find
-        desc_elems = [soup.findAll(
-            attrs={attr: re.compile(r"Desc", re.I)}
-        ) for attr in ["name", "property"]]
+        desc_elems = soup.findAll("meta", attrs={"name": re.compile(r"Desc", re.I)})
 
-        for i in range(1):
-            if len(desc_elems[i]) > 0:
-                self.desc = desc_elems[i][0]["content"]
-                break
+        print(1111, desc_elems)
+
+        for meta_elem in desc_elems:
+            if meta_elem.attrs["content"]:
+                self.desc = meta_elem.attrs["content"]
             else:
                 self.desc = ""
 
