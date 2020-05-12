@@ -75,8 +75,6 @@ class Preview(object):
         # Get the desc from whatever we can find
         desc_elems = soup.findAll("meta", attrs={"name": re.compile(r"Desc", re.I)})
 
-        print(1111, desc_elems)
-
         for meta_elem in desc_elems:
             if meta_elem.attrs["content"]:
                 self.desc = meta_elem.attrs["content"]
