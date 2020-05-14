@@ -12,6 +12,13 @@ spec:
         tier: backend
         type: web
         env: {{ .env }}
+      annotations:
+        ad.datadoghq.com/tags: '{"env":"{{ .env }}"}'
+        ad.datadoghq.com/preview.logs: |
+          [{
+            "source": "preview",
+            "service": "preview"
+          }]
     spec:
       terminationGracePeriodSeconds: 30
       containers:
